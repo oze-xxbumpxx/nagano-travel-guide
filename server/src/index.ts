@@ -7,6 +7,11 @@ import dotenv from "dotenv";
 // データベース接続のインポート
 import sequelize, { testConnection, syncDatabase } from "./config/database";
 
+// モデルのインポート
+import TravelPlan from "./models/TravelPlan";
+import Accommodation from "./models/Accommodation";
+import Attraction from "./models/Attraction";
+
 // ルートのインポート（手動で追加してください）
 // import travelRoutes from './routes/travelRoutes';
 // import attractionRoutes from './routes/attractionRoutes';
