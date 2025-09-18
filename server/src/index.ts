@@ -19,6 +19,7 @@ import Attraction from "./models/Attraction";
 
 // ミドルウェアのインポート
 import { errorHandler } from "./middleware/errorHandler";
+import travelRoutes from "./routes/travelRoutes";
 
 // 環境変数の読み込み
 dotenv.config();
@@ -62,7 +63,7 @@ const connectDB = async () => {
 };
 
 // ルートの設定（手動で追加してください）
-// app.use('/api/travel', travelRoutes);
+app.use("/api/travel", travelRoutes);
 // app.use('/api/attractions', attractionRoutes);
 // app.use('/api/accommodations', accommodationRoutes);
 

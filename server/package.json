@@ -7,7 +7,9 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "jest"
+    "test": "jest",
+    "test:connection": "npx ts-node src/test-connection.ts",
+    "sync:db": "npx ts-node src/sync-database.ts"
   },
   "dependencies": {
     "express": "^4.18.2",

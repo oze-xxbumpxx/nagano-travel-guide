@@ -2,10 +2,20 @@ import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 
 // 環境変数を読み込み
-dotenv.config();
+dotenv.config({ path: "./env.local" });
 
 // データベース接続の設定
-const sequelize = new Sequelize(process.env.DATABASE_URL || "", {
+if (!process.env.DATABASE_URL) {
+  throw new Error(
+    "DATABASE_URL environment variable is not set. Please check your .env file."
+  );
+}
+
+// 接続文字列のデバッグ
+console.log("🔍 接続文字列の確認:");
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   logging: process.env.NODE_ENV === "development" ? console.log : false,
   pool: {
