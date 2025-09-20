@@ -34,6 +34,7 @@ Object.values(models).forEach((model: any) => {
 // ミドルウェアのインポート
 import { errorHandler } from "./middleware/errorHandler";
 import travelRoutes from "./routes/travelRoutes";
+import accommodationRoutes from "./routes/accommodationRoutes";
 
 // 環境変数の読み込み
 dotenv.config();
@@ -78,7 +79,7 @@ const connectDB = async () => {
 
 // ルートの設定（手動で追加してください）
 app.use("/api/travel", travelRoutes);
-// app.use('/api/attractions', attractionRoutes);
+app.use("/api/accommodations", accommodationRoutes);
 // app.use('/api/accommodations', accommodationRoutes);
 
 // ヘルスチェック
