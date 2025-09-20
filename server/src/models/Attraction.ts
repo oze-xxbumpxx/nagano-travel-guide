@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
+import Accommodation from "./Accommodation";
 
 // インターフェース定義
 export interface IAttractionAttributes {
@@ -40,6 +41,7 @@ export interface IAttractionAttributes {
   }[];
   isRecommended: boolean;
   tags: string[];
+  travelPlanId: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -89,6 +91,7 @@ class Attraction
   }[];
   public isRecommended!: boolean;
   public tags!: string[];
+  public travelPlanId!: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -244,6 +247,14 @@ Attraction.init(
       allowNull: false,
       defaultValue: [],
     },
+    travelPlanId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "travel_plans",
+        key: "id",
+      },
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -274,5 +285,26 @@ Attraction.init(
     ],
   }
 );
+
+// 関係性の定義
+declare namespace Attraction {
+  function associate(models: any): void;
+}
+
+Attraction.associate = (models: any) => {
+  // TravelPlan hasMany Accommodatio
+  Attraction.belongsTo(models.TravelPlan, {
+    foreignKey: "travelPlanId",
+    as: "accommodations",
+  });
+
+  // TravelPlan hasMany Attraction
+  Attraction.belongsToMany(models.Accommodation, {
+    through: "accommodation_attractions",
+    foreignKey: "attractionId",
+    otherKey: "accommodationId",
+    as: "nearbyAccommodations",
+  });
+};
 
 export default Attraction;

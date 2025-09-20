@@ -45,7 +45,7 @@ export const testConnection = async (): Promise<void> => {
 // データベース同期（開発環境用）
 export const syncDatabase = async (): Promise<void> => {
   try {
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: true });
     console.log("✅ Database synchronized successfully.");
   } catch (error) {
     console.error("❌ Database synchronization failed:", error);

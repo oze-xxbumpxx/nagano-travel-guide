@@ -12,6 +12,20 @@ import TravelPlan from "./models/TravelPlan";
 import Accommodation from "./models/Accommodation";
 import Attraction from "./models/Attraction";
 
+// モデルの初期化
+const models = {
+  TravelPlan,
+  Accommodation,
+  Attraction,
+};
+
+// モデルの関係性を初期化
+Object.values(models).forEach((model: any) => {
+  if (model.associate) {
+    model.associate(models);
+  }
+});
+
 // ルートのインポート（手動で追加してください）
 // import travelRoutes from './routes/travelRoutes';
 // import attractionRoutes from './routes/attractionRoutes';

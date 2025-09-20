@@ -206,4 +206,23 @@ TravelPlan.init(
   }
 );
 
+// 関係性の定義
+declare namespace TravelPlan {
+  function associate(models: any): void;
+}
+
+TravelPlan.associate = (models: any) => {
+  // TravelPlan hasMany Accommodation
+  TravelPlan.hasMany(models.Accommodation, {
+    foreignKey: "travelPlanId",
+    as: "accommodations",
+  });
+
+  // TravelPlan hasMany Attraction
+  TravelPlan.hasMany(models.Attraction, {
+    foreignKey: "travelPlanId",
+    as: "attractions",
+  });
+};
+
 export default TravelPlan;

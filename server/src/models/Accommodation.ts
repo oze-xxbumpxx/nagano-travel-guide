@@ -48,6 +48,7 @@ export interface IAccommodationAttributes {
   }[];
   isRecommended: boolean;
   tags: string[];
+  travelPlanId: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -108,6 +109,7 @@ class Accommodation
   }[];
   public isRecommended!: boolean;
   public tags!: string[];
+  public travelPlanId!: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -263,6 +265,14 @@ Accommodation.init(
       allowNull: false,
       defaultValue: [],
     },
+    travelPlanId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "travel_plans",
+        key: "id",
+      },
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -293,5 +303,26 @@ Accommodation.init(
     ],
   }
 );
+
+// 関係性の定義
+declare namespace Accommodation {
+  function associate(models: any): void;
+}
+
+Accommodation.associate = (models: any) => {
+  // Accommodation belongsTo TravelPlan
+  Accommodation.belongsTo(models.TravelPlan, {
+    foreignKey: "travelPlanId",
+    as: "travelPlan",
+  });
+
+  // Accommodation belongsToMany Attraction (近くの観光地)
+  Accommodation.belongsToMany(models.Attraction, {
+    through: "accommodation_attractions",
+    foreignKey: "accommodationId",
+    otherKey: "attractionId",
+    as: "nearbyAttractions",
+  });
+};
 
 export default Accommodation;
