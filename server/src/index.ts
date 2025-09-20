@@ -3,6 +3,10 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
+import { errorHandler } from "./middleware/errorHandler";
+import travelRoutes from "./routes/travelRoutes";
+import accommodationRoutes from "./routes/accommodationRoutes";
+import attractionRoutes from "./routes/attractionRoutes";
 
 // データベース接続のインポート
 import sequelize, { testConnection, syncDatabase } from "./config/database";
@@ -26,15 +30,7 @@ Object.values(models).forEach((model: any) => {
   }
 });
 
-// ルートのインポート（手動で追加してください）
-// import travelRoutes from './routes/travelRoutes';
-// import attractionRoutes from './routes/attractionRoutes';
-// import accommodationRoutes from './routes/accommodationRoutes';
-
 // ミドルウェアのインポート
-import { errorHandler } from "./middleware/errorHandler";
-import travelRoutes from "./routes/travelRoutes";
-import accommodationRoutes from "./routes/accommodationRoutes";
 
 // 環境変数の読み込み
 dotenv.config();
@@ -80,7 +76,7 @@ const connectDB = async () => {
 // ルートの設定（手動で追加してください）
 app.use("/api/travel", travelRoutes);
 app.use("/api/accommodations", accommodationRoutes);
-// app.use('/api/accommodations', accommodationRoutes);
+app.use("/api/attractions", attractionRoutes);
 
 // ヘルスチェック
 app.get("/api/health", (req, res) => {

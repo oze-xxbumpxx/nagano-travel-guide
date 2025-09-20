@@ -45,8 +45,16 @@ export const testConnection = async (): Promise<void> => {
 // データベース同期（開発環境用）
 export const syncDatabase = async (): Promise<void> => {
   try {
-    await sequelize.sync({ force: true });
-    console.log("✅ Database synchronized successfully.");
+    // 環境変数で同期モードを制御
+    const syncMode =
+      process.env.NODE_ENV === "development" ? { alter: true } : false;
+
+    if (syncMode) {
+      await sequelize.sync(syncMode);
+      console.log("✅ Database synchronized successfully.");
+    } else {
+      console.log("⚠️ Database sync disabled in production mode.");
+    }
   } catch (error) {
     console.error("❌ Database synchronization failed:", error);
     throw error;

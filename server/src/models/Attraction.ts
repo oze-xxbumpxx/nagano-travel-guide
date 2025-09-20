@@ -295,7 +295,7 @@ Attraction.associate = (models: any) => {
   // TravelPlan hasMany Accommodatio
   Attraction.belongsTo(models.TravelPlan, {
     foreignKey: "travelPlanId",
-    as: "accommodations",
+    as: "travelPlan",
   });
 
   // TravelPlan hasMany Attraction
