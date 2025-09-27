@@ -37,6 +37,20 @@ const TravelPlans: React.FC = () => {
     }).format(amount);
   };
 
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("この旅行プランを削除しますか？")) {
+      return;
+    }
+    try {
+      await travelAPI.delete(id);
+      alert("旅行プランを削除しました");
+      fetchTravelPlans();
+    } catch (error: any) {
+      console.error("Error deleting travel plan:", error);
+      alert("旅行プランの削除に失敗しました。時間をおいて再度お試しください。");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -118,7 +132,10 @@ const TravelPlans: React.FC = () => {
                     <button className="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm hover:bg-blue-200 transition-colors">
                       編集
                     </button>
-                    <button className="bg-red-100 text-red-700 px-3 py-1 rounded text-sm hover:bg-red-200 transition-colors">
+                    <button
+                      onClick={() => handleDelete(plan.id)}
+                      className="bg-red-100 text-red-700 px-3 py-1 rounded text-sm hover:bg-red-200 transition-colors"
+                    >
                       削除
                     </button>
                   </div>
