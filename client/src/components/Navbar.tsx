@@ -38,6 +38,16 @@ const Navbar: React.FC = () => {
               旅行プラン
             </Link>
             <Link
+              to="/create-travel-plan"
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive("/create-travel-plan")
+                  ? "bg-blue-100 text-blue-700"
+                  : "text-gray-600 hover:text-blue-600"
+              }`}
+            >
+              プラン作成
+            </Link>
+            <Link
               to="/accommodations"
               className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/accommodations")

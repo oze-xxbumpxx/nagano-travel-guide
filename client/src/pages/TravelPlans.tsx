@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { travelAPI } from "../services/api";
 import { TravelPlan } from "../types";
 
 const TravelPlans: React.FC = () => {
+  const navigate = useNavigate();
   const [travelPlans, setTravelPlans] = useState<TravelPlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +63,10 @@ const TravelPlans: React.FC = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">旅行プラン</h1>
-        <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+        <button
+          onClick={() => navigate("/create-travel-plan")}
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+        >
           新しいプランを作成
         </button>
       </div>
@@ -71,7 +76,10 @@ const TravelPlans: React.FC = () => {
           <div className="text-gray-500 text-lg mb-4">
             まだ旅行プランがありません
           </div>
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+          <button
+            onClick={() => navigate("/create-travel-plan")}
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+          >
             最初のプランを作成
           </button>
         </div>
