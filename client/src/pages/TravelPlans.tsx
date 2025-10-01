@@ -51,6 +51,10 @@ const TravelPlans: React.FC = () => {
     }
   };
 
+  const handleEdit = (id: number) => {
+    navigate(`/edit-travel-plan/${id}`);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -129,7 +133,10 @@ const TravelPlans: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex space-x-2 ml-4">
-                    <button className="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm hover:bg-blue-200 transition-colors">
+                    <button
+                      onClick={() => handleEdit(plan.id)}
+                      className="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm hover:bg-blue-200 transition-colors"
+                    >
                       編集
                     </button>
                     <button
