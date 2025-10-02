@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import TravelPlans from "./pages/TravelPlans";
 import CreateTravelPlan from "./pages/createTravelPlan";
 import EditTravelPlan from "./pages/editTravelPlan";
+import Accommodations from "./pages/Accommodations";
 // import Accommodations from "./pages/Accommodations";
 // import Attractions from "./pages/Attractions";
 
@@ -19,8 +20,9 @@ function App() {
             <Route path="/travel-plans" element={<TravelPlans />} />
             <Route path="/create-travel-plan" element={<CreateTravelPlan />} />
             <Route path="/edit-travel-plan/:id" element={<EditTravelPlan />} />
-            {/* <Route path="/accommodations" element={<Accommodations />} />
-            <Route path="/attractions" element={<Attractions />} /> */}
+            <Route path="/accommodations" element={<Accommodations />} />
+
+            {/* <Route path="/attractions" element={<Attractions />} /> */}
           </Routes>
         </main>
       </div>
