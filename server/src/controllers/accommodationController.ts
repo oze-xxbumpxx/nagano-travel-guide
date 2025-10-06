@@ -50,17 +50,13 @@ const validateAccommodation = (data: any) => {
     }
   }
 
-  // contact オブジェクトのバリデーション
-  if (!data.contact || typeof data.contact !== "object") {
-    errors.push("連絡先情報は必須です");
-  } else {
-    if (!data.contact.phone || data.contact.phone.trim() === "") {
-      errors.push("電話番号は必須です");
-    }
+  // contact オブジェクトのバリデーション（オプショナル）
+  if (data.contact && typeof data.contact !== "object") {
+    errors.push("連絡先情報はオブジェクトである必要があります");
   }
 
-  if (!data.travelPlanId || typeof data.travelPlanId !== "number") {
-    errors.push("旅行プランIDは必須です");
+  if (data.travelPlanId && typeof data.travelPlanId !== "number") {
+    errors.push("旅行プランIDは数値である必要があります");
   }
 
   if (data.rating && (data.rating < 0 || data.rating > 5)) {
@@ -164,13 +160,15 @@ export const createAccommodation = async (req: Request, res: Response) => {
       });
     }
 
-    // 旅行プランの存在確認
-    const travelPlan = await TravelPlan.findByPk(travelPlanId);
-    if (!travelPlan) {
-      return res.status(404).json({
-        success: false,
-        message: "旅行プランが見つかりません",
-      });
+    // 旅行プランIDが指定されている場合のみ存在確認
+    if (travelPlanId) {
+      const travelPlan = await TravelPlan.findByPk(travelPlanId);
+      if (!travelPlan) {
+        return res.status(404).json({
+          success: false,
+          message: "指定された旅行プランが見つかりません",
+        });
+      }
     }
 
     // データベースに保存

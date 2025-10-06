@@ -41,7 +41,7 @@ export interface IAttractionAttributes {
   }[];
   isRecommended: boolean;
   tags: string[];
-  travelPlanId: number;
+  travelPlanId?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -91,7 +91,7 @@ class Attraction
   }[];
   public isRecommended!: boolean;
   public tags!: string[];
-  public travelPlanId!: number;
+  public travelPlanId?: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -214,8 +214,13 @@ Attraction.init(
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
-        isUrl: {
-          msg: "有効なURLを入力してください",
+        isValidUrl(value: string) {
+          if (value && value.trim() !== "") {
+            const urlPattern = /^https?:\/\/.+/;
+            if (!urlPattern.test(value)) {
+              throw new Error("有効なURLを入力してください");
+            }
+          }
         },
       },
     },
@@ -249,7 +254,7 @@ Attraction.init(
     },
     travelPlanId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: "travel_plans",
         key: "id",

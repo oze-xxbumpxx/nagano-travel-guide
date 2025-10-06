@@ -48,7 +48,7 @@ export interface IAccommodationAttributes {
   }[];
   isRecommended: boolean;
   tags: string[];
-  travelPlanId: number;
+  travelPlanId?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -109,7 +109,7 @@ class Accommodation
   }[];
   public isRecommended!: boolean;
   public tags!: string[];
-  public travelPlanId!: number;
+  public travelPlanId?: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -188,14 +188,8 @@ Accommodation.init(
     },
     contact: {
       type: DataTypes.JSONB,
-      allowNull: false,
-      validate: {
-        isValidContact(value: any) {
-          if (!value || !value.phone) {
-            throw new Error("電話番号は必須です");
-          }
-        },
-      },
+      allowNull: true,
+      defaultValue: {},
     },
     amenities: {
       type: DataTypes.ARRAY(DataTypes.STRING),
@@ -227,14 +221,8 @@ Accommodation.init(
     },
     policies: {
       type: DataTypes.JSONB,
-      allowNull: false,
-      validate: {
-        isValidPolicies(value: any) {
-          if (!value || !value.cancellation || !value.payment) {
-            throw new Error("キャンセルポリシーと支払い方法は必須です");
-          }
-        },
-      },
+      allowNull: true,
+      defaultValue: {},
     },
     photos: {
       type: DataTypes.ARRAY(DataTypes.STRING),
@@ -267,7 +255,7 @@ Accommodation.init(
     },
     travelPlanId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: "travel_plans",
         key: "id",

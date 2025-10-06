@@ -9,6 +9,7 @@
 - **データベース**: PostgreSQL + Sequelize
 - **クラウド DB**: ElephantSQL
 - **スタイリング**: Tailwind CSS
+- **テスト**: Vitest
 
 ## プロジェクト構成
 

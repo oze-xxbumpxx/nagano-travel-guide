@@ -38,8 +38,8 @@ const validateAttraction = (data: any) => {
     errors.push("大人料金は0以上である必要があります");
   }
 
-  if (!data.travelPlanId || typeof data.travelPlanId !== "number") {
-    errors.push("旅行プランIDは必須です");
+  if (data.travelPlanId && typeof data.travelPlanId !== "number") {
+    errors.push("旅行プランIDは数値である必要があります");
   }
 
   if (data.rating && (data.rating < 0 || data.rating > 5)) {
@@ -141,13 +141,15 @@ export const createAttraction = async (req: Request, res: Response) => {
       });
     }
 
-    // 旅行プランの存在確認
-    const travelPlan = await TravelPlan.findByPk(travelPlanId);
-    if (!travelPlan) {
-      return res.status(404).json({
-        success: false,
-        message: "指定された旅行プランが見つかりません",
-      });
+    // 旅行プランIDが指定されている場合のみ存在確認
+    if (travelPlanId) {
+      const travelPlan = await TravelPlan.findByPk(travelPlanId);
+      if (!travelPlan) {
+        return res.status(404).json({
+          success: false,
+          message: "指定された旅行プランが見つかりません",
+        });
+      }
     }
 
     // データベースに保存
