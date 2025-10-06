@@ -6,8 +6,11 @@ import TravelPlans from "./pages/TravelPlans";
 import CreateTravelPlan from "./pages/createTravelPlan";
 import EditTravelPlan from "./pages/editTravelPlan";
 import Accommodations from "./pages/Accommodations";
-// import Accommodations from "./pages/Accommodations";
-// import Attractions from "./pages/Attractions";
+import CreateAccommodation from "./pages/CreateAccommodation";
+import EditAccommodation from "./pages/EditAccommodation";
+import Attractions from "./pages/Attractions";
+import CreateAttraction from "./pages/CreateAttraction";
+import EditAttraction from "./pages/EditAttraction";
 
 function App() {
   return (
@@ -21,8 +24,17 @@ function App() {
             <Route path="/create-travel-plan" element={<CreateTravelPlan />} />
             <Route path="/edit-travel-plan/:id" element={<EditTravelPlan />} />
             <Route path="/accommodations" element={<Accommodations />} />
-
-            {/* <Route path="/attractions" element={<Attractions />} /> */}
+            <Route
+              path="/create-accommodation"
+              element={<CreateAccommodation />}
+            />
+            <Route
+              path="/edit-accommodation/:id"
+              element={<EditAccommodation />}
+            />
+            <Route path="/attractions" element={<Attractions />} />
+            <Route path="/create-attraction" element={<CreateAttraction />} />
+            <Route path="/edit-attraction/:id" element={<EditAttraction />} />
           </Routes>
         </main>
       </div>

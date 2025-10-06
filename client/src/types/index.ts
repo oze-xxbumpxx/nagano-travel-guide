@@ -71,7 +71,7 @@ export interface Accommodation {
   }[];
   isRecommended: boolean;
   tags: string[];
-  travelPlanId: number;
+  travelPlanId?: number;
   createdAt: string;
   updatedAt: string;
   travelPlan?: TravelPlan;
@@ -116,7 +116,7 @@ export interface Attraction {
   }[];
   isRecommended: boolean;
   tags: string[];
-  travelPlanId: number;
+  travelPlanId?: number;
   createdAt: string;
   updatedAt: string;
   travelPlan?: TravelPlan;
@@ -198,7 +198,7 @@ export interface accommodationFormData {
   }[];
   isRecommended: boolean;
   tags: string[];
-  travelPlanId: number;
+  travelPlanId?: number;
 }
 
 export interface attractionFormData {
@@ -238,5 +238,5 @@ export interface attractionFormData {
   }[];
   isRecommended: boolean;
   tags: string[];
-  travelPlanId: number;
+  travelPlanId?: number;
 }
