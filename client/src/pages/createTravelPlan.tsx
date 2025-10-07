@@ -158,120 +158,109 @@ const CreateTravelPlan: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
-      {/* ヘッダーセクション */}
-      <div className="relative bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 rounded-3xl shadow-xl p-6 md:p-8 overflow-hidden border-2 border-white">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full opacity-20 -mr-16 -mt-16"></div>
-        
-        <div className="relative">
-          <button
-            onClick={handleCancel}
-            className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-800 font-semibold mb-4 transition-colors group"
-          >
-            <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-            </svg>
-            旅行プラン一覧に戻る
-          </button>
-          
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-xl transform -rotate-6">
-              <span className="text-4xl">✨</span>
-            </div>
-            <div>
-              <h1 className="text-2xl md:text-4xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                新しい旅行プランを作成
-              </h1>
-              <p className="text-sm md:text-base text-gray-600 font-medium mt-1">
-                素敵な旅の計画を始めましょう
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white shadow-lg rounded-lg p-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+            新しい旅行プランを作成
+          </h1>
 
-      {/* エラーメッセージ */}
-      {errors.length > 0 && (
-        <div className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl p-4 md:p-6 shadow-lg">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
-              <span className="text-white text-xl font-bold">!</span>
+          {/* エラーメッセージ */}
+          {errors.length > 0 && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-5 w-5 text-red-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">
+                    以下のエラーがあります：
+                  </h3>
+                  <div className="mt-2 text-sm text-red-700">
+                    <ul className="list-disc pl-5 space-y-1">
+                      {errors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex-1">
-              <h3 className="font-black text-red-800 mb-2 text-lg">入力エラーがあります</h3>
-              <ul className="space-y-1.5">
-                {errors.map((error, index) => (
-                  <li key={index} className="text-red-700 text-sm flex items-start gap-2 font-medium">
-                    <span className="text-red-500 font-bold">•</span>
-                    {error}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
+          )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* 基本情報セクション */}
-        <div className="bg-white rounded-3xl shadow-lg p-6 md:p-8 border-2 border-gray-100">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-md">
-              <span className="text-xl">📝</span>
-            </div>
-            <h2 className="text-xl md:text-2xl font-black text-gray-900">基本情報</h2>
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {/* 基本情報 */}
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-gray-900">基本情報</h2>
 
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="title" className="block text-sm font-bold text-gray-700 mb-2">
-                  ✏️ タイトル *
-                </label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm md:text-base"
-                  placeholder="旅行プランのタイトルを入力"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label
+                    htmlFor="title"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    タイトル *
+                  </label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="旅行プランのタイトルを入力"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="destination"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    目的地 *
+                  </label>
+                  <input
+                    type="text"
+                    id="destination"
+                    name="destination"
+                    value={formData.destination}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="例: 奈良井宿"
+                    required
+                  />
+                </div>
               </div>
 
               <div>
-                <label htmlFor="destination" className="block text-sm font-bold text-gray-700 mb-2">
-                  📍 目的地 *
+                <label
+                  htmlFor="description"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  説明 *
                 </label>
-                <input
-                  type="text"
-                  id="destination"
-                  name="destination"
-                  value={formData.destination}
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm md:text-base"
-                  placeholder="例: 奈良井宿"
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="旅行プランの詳細な説明を入力"
                   required
                 />
               </div>
-            </div>
-
-            <div>
-              <label htmlFor="description" className="block text-sm font-bold text-gray-700 mb-2">
-                📋 説明 *
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                rows={4}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm md:text-base"
-                placeholder="旅行プランの詳細な説明を入力"
-                required
-              />
-            </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -496,46 +485,28 @@ const CreateTravelPlan: React.FC = () => {
                 </label>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* ボタンセクション */}
-        <div className="bg-white rounded-3xl shadow-lg p-6 md:p-8 border-2 border-gray-100">
-          <div className="flex flex-col sm:flex-row justify-end gap-4">
-            <button
-              type="button"
-              onClick={handleCancel}
-              className="px-8 py-3 md:py-4 border-2 border-gray-300 rounded-2xl text-sm md:text-base font-bold text-gray-700 bg-white hover:bg-gray-50 transition-all shadow-md hover:shadow-lg"
-              disabled={loading}
-            >
-              キャンセル
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="group px-8 py-3 md:py-4 rounded-2xl text-sm md:text-base font-black text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  作成中...
-                </>
-              ) : (
-                <>
-                  <span className="text-xl">🚀</span>
-                  旅行プランを作成
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </>
-              )}
-            </button>
-          </div>
+            {/* ボタン */}
+            <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                disabled={loading}
+              >
+                キャンセル
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? "作成中..." : "旅行プランを作成"}
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
