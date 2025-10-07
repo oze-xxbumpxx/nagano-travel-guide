@@ -33,10 +33,10 @@ Object.values(models).forEach((model: any) => {
 // ミドルウェアのインポート
 
 // 環境変数の読み込み
-dotenv.config();
+dotenv.config({ path: "./env.local" });
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3003;
 
 // レート制限の設定
 const limiter = rateLimit({
@@ -48,9 +48,24 @@ const limiter = rateLimit({
 // ミドルウェアの設定
 app.use(helmet());
 app.use(limiter);
+// CORS設定（本番環境対応）
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  process.env.FRONTEND_URL,
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: (origin, callback) => {
+      // オリジンがない場合（モバイルアプリなど）またはリストにある場合は許可
+      if (!origin || allowedOrigins.includes(origin as string)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
