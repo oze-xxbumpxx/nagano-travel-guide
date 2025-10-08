@@ -65,10 +65,16 @@ console.log("allowedOrigins:", allowedOrigins);
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log("🌐 リクエストオリジン:", origin);
+      console.log("✅ 許可されたオリジン:", allowedOrigins);
+      console.log("🔍 オリジンチェック:", allowedOrigins.includes(origin as string));
+      
       // オリジンがない場合（モバイルアプリなど）またはリストにある場合は許可
       if (!origin || allowedOrigins.includes(origin as string)) {
+        console.log("✅ CORS許可");
         callback(null, true);
       } else {
+        console.log("❌ CORS拒否");
         callback(new Error("Not allowed by CORS"));
       }
     },
