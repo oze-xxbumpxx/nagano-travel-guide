@@ -56,6 +56,12 @@ const allowedOrigins = [
   process.env.CLIENT_URL,
 ].filter(Boolean);
 
+// デバッグ用ログ
+console.log("🔍 CORS設定のデバッグ:");
+console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
+console.log("CLIENT_URL:", process.env.CLIENT_URL);
+console.log("allowedOrigins:", allowedOrigins);
+
 app.use(
   cors({
     origin: (origin, callback) => {
